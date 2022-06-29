@@ -8,7 +8,7 @@ import {
   WarningOutlineIcon,
 } from 'native-base';
 import React, {useContext} from 'react';
-import {SafeAreaView} from 'react-native';
+import {Alert, SafeAreaView} from 'react-native';
 import {Button, Page, TextInput} from '../../component';
 import AppContext from '../../store/configureStore';
 import {useForm, Controller} from 'react-hook-form';
@@ -34,6 +34,18 @@ const InventoryUpdate: React.FC<any> = props => {
   const onSubmit = (data: any) => {
     console.log(data);
     EditItems(data, props.route.params.index, context);
+  };
+
+  const deletConfirm = () => {
+    // eslint-disable-next-line no-sparse-arrays
+    Alert.alert('Warning', 'Are you sure you want to perform this action', [
+      {text: 'NO'},
+      {
+        text: 'Yes',
+        onPress: deleteData,
+      },
+      ,
+    ]);
   };
 
   const deleteData = () => DeleteItems(props.route.params.index, context);
@@ -166,7 +178,7 @@ const InventoryUpdate: React.FC<any> = props => {
                 mt="2"
                 colorScheme="red"
                 width="full"
-                onPress={deleteData}>
+                onPress={deletConfirm}>
                 Delete
               </Button>
             </VStack>
